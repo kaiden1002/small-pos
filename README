@@ -1,0 +1,10 @@
+Small POS
+
+Author: Michael N Bilgore
+
+Description:
+	Small POS is a small open source project to keep track of sales
+for a small portable sales environment (fairs, craft shows, conventions
+, etc.).  It aims to provide a fairly simple and reliable enviroment to
+record sales for future review.  It must be very efficient so that it 
+can run on cheap portable hardware such as a raspberry pi.
