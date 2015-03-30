@@ -10,6 +10,7 @@
 
 void printPrompt(int prompt);
 int toString(char a[]);
+int isDollarFormat(char input[]);
 
 int main() {
 	char input[50];
@@ -54,49 +55,25 @@ int main() {
 			while(sellAction == START){
 				printPrompt(SELL);
 				scanf("%s", input);
-				k = 0;
-				j = 0;
-				if(input[0] > 48 && input[0] < 58){
-					for(i = 1; input[i] != 0;i++){
-
-						if(!(input[i] > 47 && input[i] < 58))
-							k++;
-						if(input[i] == '.')
-							j++;
+				if(isDollarFormat(input)){
+					sellAction = AMOUNT;
+					if(input[strlen(input)-1] == '.'){
+						input[strlen(input)-1] = 0;
 					}
-
-					if(j == 1 && k == 1){
-						
-						centsOwed = 0;
-						for(i = 0; input[i] != 0; i++){}
-						if(input[i-1] == '.')
-						{
-							sellAction = AMOUNT;
-							input[i-1] = 0;
-							centsOwed += (toString(input)*100);
-							
-						}
-						else if(input[i-2] == '.')
-						{
-							sellAction = AMOUNT;
-							input[i-2] = 0;
-							centsOwed += ((input[i-1] - 48) * 10)+(toString(input)*100);
-						}
-						else if(input[i-3] == '.')
-						{
-							sellAction = AMOUNT;
-							input[i-3] = 0;
-							centsOwed += (input[i-1] - 48)+((input[i-2] - 48) * 10)+(toString(input)*100);
-						}
-						else
-							printf("input error\n");
-						
+					else if(input[strlen(input)-2] == '.'){
+						input[strlen(input)-2] = input[strlen(input)-1];
+						input[strlen(input)-1] = 0;
 					}
-					else
-						printf("input error try again.\n");
+					else if(input[strlen(input)-3] == '.'){
+						input[strlen(input)-3] =input[strlen(input)-2];
+						input[strlen(input)-2] = input[strlen(input)-1];
+						input[strlen(input)-1] = 0;
+					}
+					else{
+						printf("unknown error\n");
+					}
+					centsOwed = toString(input);
 				}
-				else
-					printf("input error try again\n");
 			}
 			while(sellAction == AMOUNT){
 
@@ -187,6 +164,42 @@ void printPrompt(int prompt) {
 
 	}
 
+}
+
+int isDollarFormat(char input[]) {
+	
+	int k = 0;
+	int j = 0;
+	int i;
+	if(input[0] > 48 && input[0] < 58){
+		for(i = 1; input[i] != 0;i++){
+
+			if(!(input[i] > 47 && input[i] < 58))
+				k++;
+			if(input[i] == '.')
+				j++;
+		}
+
+		if(j == 1 && k == 1){
+			for(i = 0; input[i] != 0; i++){}
+			if(!(input[i-1] == '.' || input[i-2] == '.' || input[i-3] == '.')){
+				printf("input error\n");
+				return 0;
+			}
+			else{
+				return 1;
+			}			
+		}	
+		else{
+			printf("input error try again.\n");
+			return 0;
+		}
+	}
+	else{
+		printf("input error try again\n");
+		return 0;
+	}
+	
 }
 
 int toString(char a[]) {
