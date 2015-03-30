@@ -15,8 +15,6 @@ int isDollarFormat(char input[]);
 int main() {
 	char input[50];
 	int i;
-	int k = 0;
-	int j = 0;
 	int centsOwed;
 	int centsPaid;
 	int centsChange;
