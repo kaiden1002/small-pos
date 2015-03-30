@@ -9,12 +9,16 @@
 #define CHANGE 31
 
 void printPrompt(int prompt);
+int toString(char a[]);
 
 int main() {
 	char input[50];
 	int i;
 	int k = 0;
 	int j = 0;
+	int centsOwed;
+	int centsPaid;
+	int centsChange;
 	int running = RUN;
 	int action = MAIN;
 	int sellAction = START;
@@ -61,8 +65,33 @@ int main() {
 							j++;
 					}
 
-					if(j == 1 && k == 1)
-						sellAction = AMOUNT;
+					if(j == 1 && k == 1){
+						
+						centsOwed = 0;
+						for(i = 0; input[i] != 0; i++){}
+						if(input[i-1] == '.')
+						{
+							sellAction = AMOUNT;
+							input[i-1] = 0;
+							centsOwed += (toString(input)*100);
+							
+						}
+						else if(input[i-2] == '.')
+						{
+							sellAction = AMOUNT;
+							input[i-2] = 0;
+							centsOwed += ((input[i-1] - 48) * 10)+(toString(input)*100);
+						}
+						else if(input[i-3] == '.')
+						{
+							sellAction = AMOUNT;
+							input[i-3] = 0;
+							centsOwed += (input[i-1] - 48)+((input[i-2] - 48) * 10)+(toString(input)*100);
+						}
+						else
+							printf("input error\n");
+						
+					}
 					else
 						printf("input error try again.\n");
 				}
@@ -71,7 +100,7 @@ int main() {
 			}
 			while(sellAction == AMOUNT){
 
-				printf("You are selling an item costing $%s\n", input);
+				printf("You are selling an item costing %d pennies\n", centsOwed);
 				printf("How much are you being paid\n>>$");
 				scanf("%s", input);
 				k = 0;
@@ -85,8 +114,32 @@ int main() {
 							j++;
 					}
 
-					if(j == 1 && k == 1)
-						sellAction = CHANGE;
+					if(j == 1 && k == 1){
+						centsPaid = 0;
+						for(i = 0; input[i] != 0; i++){}
+						if(input[i-1] == '.')
+						{
+							sellAction = CHANGE;
+							input[i-1] = 0;
+							centsPaid += (toString(input)*100);
+							
+						}
+						else if(input[i-2] == '.')
+						{
+							sellAction = CHANGE;
+							input[i-2] = 0;
+							centsPaid += ((input[i-1] - 48) * 10)+(toString(input)*100);
+						}
+						else if(input[i-3] == '.')
+						{
+							sellAction = CHANGE;
+							input[i-3] = 0;
+							centsPaid += (input[i-1] - 48)+((input[i-2] - 48) * 10)+(toString(input)*100);
+						}
+						else
+							printf("input error\n");
+						
+					}
 					else
 						printf("input error try again.\n");
 				}
@@ -95,7 +148,7 @@ int main() {
 			}
 			while(sellAction == CHANGE){
 
-				printf("your change is \n");
+				printf("your change is %d pennies\n", centsPaid - centsOwed);
 				action = MAIN;
 				sellAction = START;
 			}
@@ -134,4 +187,33 @@ void printPrompt(int prompt) {
 
 	}
 
+}
+
+int toString(char a[]) {
+	int c, sign, offset, n;
+ 
+	if (a[0] == '-') 
+	{
+		sign = -1;
+	}
+	if (sign == -1) 
+	{
+		offset = 1;
+	}
+	else 
+	{
+		offset = 0;
+	}
+ 
+	n = 0;
+ 
+	for (c = offset; a[c] != '\0'; c++) {
+		n = n * 10 + a[c] - '0';
+	}
+ 
+	if (sign == -1) {
+		n = -n;
+	}
+ 
+	return n;
 }
