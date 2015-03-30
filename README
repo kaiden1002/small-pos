@@ -8,3 +8,11 @@ for a small portable sales environment (fairs, craft shows, conventions
 , etc.).  It aims to provide a fairly simple and reliable enviroment to
 record sales for future review.  It must be very efficient so that it 
 can run on cheap portable hardware such as a raspberry pi.
+
+Work so far:
+As of now all the program does is allow you to quit or sell an item
+and it provides you with change owed.
+mingw compile:
+	gcc pos.c -o pos.exe
+gcc compile:
+	gcc pos.c -o pos

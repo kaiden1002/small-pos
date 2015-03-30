@@ -59,20 +59,23 @@ int main() {
 					sellAction = AMOUNT;
 					if(input[strlen(input)-1] == '.'){
 						input[strlen(input)-1] = 0;
+						centsOwed = toString(input);
 					}
 					else if(input[strlen(input)-2] == '.'){
 						input[strlen(input)-2] = input[strlen(input)-1];
 						input[strlen(input)-1] = 0;
+						centsOwed = toString(input);
 					}
 					else if(input[strlen(input)-3] == '.'){
 						input[strlen(input)-3] =input[strlen(input)-2];
 						input[strlen(input)-2] = input[strlen(input)-1];
 						input[strlen(input)-1] = 0;
+						centsOwed = toString(input);
 					}
 					else{
 						printf("unknown error\n");
 					}
-					centsOwed = toString(input);
+					
 				}
 			}
 			while(sellAction == AMOUNT){
@@ -80,48 +83,41 @@ int main() {
 				printf("You are selling an item costing %d pennies\n", centsOwed);
 				printf("How much are you being paid\n>>$");
 				scanf("%s", input);
-				k = 0;
-				j = 0;
-				if(input[0] > 48 && input[0] < 58){
-					for(i = 1; input[i] != 0;i++){
-
-						if(!(input[i] > 47 && input[i] < 58))
-							k++;
-						if(input[i] == '.')
-							j++;
-					}
-
-					if(j == 1 && k == 1){
-						centsPaid = 0;
-						for(i = 0; input[i] != 0; i++){}
-						if(input[i-1] == '.')
-						{
+				if(isDollarFormat(input)){
+					if(input[strlen(input)-1] == '.'){
+						input[strlen(input)-1] = 0;
+						centsPaid = toString(input);
+						if(centsPaid >= centsOwed){
 							sellAction = CHANGE;
-							input[i-1] = 0;
-							centsPaid += (toString(input)*100);
-							
-						}
-						else if(input[i-2] == '.')
-						{
-							sellAction = CHANGE;
-							input[i-2] = 0;
-							centsPaid += ((input[i-1] - 48) * 10)+(toString(input)*100);
-						}
-						else if(input[i-3] == '.')
-						{
-							sellAction = CHANGE;
-							input[i-3] = 0;
-							centsPaid += (input[i-1] - 48)+((input[i-2] - 48) * 10)+(toString(input)*100);
 						}
 						else
-							printf("input error\n");
-						
+							printf("Not enough money\n");
 					}
-					else
-						printf("input error try again.\n");
+					else if(input[strlen(input)-2] == '.'){
+						input[strlen(input)-2] = input[strlen(input)-1];
+						input[strlen(input)-1] = 0;
+						centsPaid = toString(input);
+						if(centsPaid >= centsOwed){
+							sellAction = CHANGE;
+						}
+						else
+							printf("Not enough money\n");
+					}
+					else if(input[strlen(input)-3] == '.'){
+						input[strlen(input)-3] =input[strlen(input)-2];
+						input[strlen(input)-2] = input[strlen(input)-1];
+						input[strlen(input)-1] = 0;
+						centsPaid = toString(input);
+						if(centsPaid >= centsOwed){
+							sellAction = CHANGE;
+						}
+						else
+							printf("Not enough money\n");
+					}
+					else{
+						printf("unknown error\n");
+					}
 				}
-				else
-					printf("input error try again\n");
 			}
 			while(sellAction == CHANGE){
 
