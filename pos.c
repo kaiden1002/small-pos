@@ -1,59 +1,47 @@
-#include <stdio.h>
-#include <string.h>
-#define SELL 12
-#define MAIN 10
-#define QUIT 0
-#define RUN 1
-#define START 56
-#define AMOUNT 43
-#define CHANGE 31
-
-void printPrompt(int prompt);
-int toString(char a[]);
-int isDollarFormat(char input[]);
+#include "pos.h"
 
 int main() {
+	
+	//variables
 	char input[50];
-	int i;
 	int centsOwed;
 	int centsPaid;
-	int centsChange;
 	int running = RUN;
 	int action = MAIN;
 	int sellAction = START;
+	
+	//main program loop
 	while(running) {
-
+		//switch statement controls what part of the program to run based on the action variable
 		switch(action){
-
+		//main case or main menu of the program
 		case MAIN:
 			printPrompt(MAIN);
 			scanf("%s", input);
-			if(input[0] > 47 && input[0] < 58){
-				if(input[1] == 0){
-					switch(input[0]) {
-
+			if(isSingleDigit(input)){ //checks to make sure input is a single digit
+				switch(input[0]) {
 					case '0':
+						//this will quit the program out of its main loop
 						running = QUIT;
 						break;
 					case '1':
+						//set action to sell moving program flow to that part of the switch statement
 						action = SELL;
 						break;
 					default:
+						//any other option at this point will just rerun the loop
 						action = MAIN;
 						break;
 					}
-				}
-				else
-					printf("error invalid selection\n");
 			}
-			else
-				printf("error invalid selection\n");
 			break;
+		//case to handle selling an item consists of three stages each with its own while loop START AMOUNT and CHANGE
+		//START gets item's price, AMOUNT gets the amount paid, CHANGE tells you how much change is owed
 		case SELL:
 			while(sellAction == START){
 				printPrompt(SELL);
 				scanf("%s", input);
-				if(isDollarFormat(input)){
+				if(isDollarFormat(input)){ //check that input is in acceptable format store in centsOwed and move to AMOUNT
 					sellAction = AMOUNT;
 					if(input[strlen(input)-1] == '.'){
 						input[strlen(input)-1] = 0;
@@ -81,7 +69,7 @@ int main() {
 				printf("You are selling an item costing %d pennies\n", centsOwed);
 				printf("How much are you being paid\n>>$");
 				scanf("%s", input);
-				if(isDollarFormat(input)){
+				if(isDollarFormat(input)){ //check format of input and make sure it is more than what is owed then move on to CHANGE
 					if(input[strlen(input)-1] == '.'){
 						input[strlen(input)-1] = 0;
 						centsPaid = toString(input);
@@ -117,7 +105,7 @@ int main() {
 					}
 				}
 			}
-			while(sellAction == CHANGE){
+			while(sellAction == CHANGE){ //print out change owed and move program flow back to the main menu
 
 				printf("your change is %d pennies\n", centsPaid - centsOwed);
 				action = MAIN;
@@ -128,99 +116,4 @@ int main() {
 		}
 	}
 	return 0;
-
-}
-
-void printPrompt(int prompt) {
-
-	switch(prompt) {
-
-	case MAIN:
-		printf("Welcome to Small POS\n");
-		printf("What Would You Like To Do?\n");
-		printf("Options:\n0. Quit Small POS\n");
-		printf("1. Sell an item\n");
-		printf("2. \n");
-		printf("3. \n");
-		printf("4. \n");
-		printf("5. \n");
-		printf("6. \n");
-		printf("7. \n");
-		printf("8. \n");
-		printf("9. \n>>");
-		break;
-	case SELL:
-		printf("Please enter the item you wish to sell's price\n");
-		printf("(use the format 0.00)\n>>$");
-		break;
-	default:
-		break;
-
-	}
-
-}
-
-int isDollarFormat(char input[]) {
-	
-	int k = 0;
-	int j = 0;
-	int i;
-	if(input[0] > 48 && input[0] < 58){
-		for(i = 1; input[i] != 0;i++){
-
-			if(!(input[i] > 47 && input[i] < 58))
-				k++;
-			if(input[i] == '.')
-				j++;
-		}
-
-		if(j == 1 && k == 1){
-			for(i = 0; input[i] != 0; i++){}
-			if(!(input[i-1] == '.' || input[i-2] == '.' || input[i-3] == '.')){
-				printf("input error\n");
-				return 0;
-			}
-			else{
-				return 1;
-			}			
-		}	
-		else{
-			printf("input error try again.\n");
-			return 0;
-		}
-	}
-	else{
-		printf("input error try again\n");
-		return 0;
-	}
-	
-}
-
-int toString(char a[]) {
-	int c, sign, offset, n;
- 
-	if (a[0] == '-') 
-	{
-		sign = -1;
-	}
-	if (sign == -1) 
-	{
-		offset = 1;
-	}
-	else 
-	{
-		offset = 0;
-	}
- 
-	n = 0;
- 
-	for (c = offset; a[c] != '\0'; c++) {
-		n = n * 10 + a[c] - '0';
-	}
- 
-	if (sign == -1) {
-		n = -n;
-	}
- 
-	return n;
 }
