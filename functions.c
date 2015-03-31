@@ -43,7 +43,7 @@ void printPrompt(int prompt) {
 		printf("1. Sell an item\n");
 		printf("2. Add to the till\n");
 		printf("3. Remove from the till\n");
-		printf("4. \n");
+		printf("4. Show till balance\n");
 		printf("5. \n");
 		printf("6. \n");
 		printf("7. \n");
@@ -59,6 +59,9 @@ void printPrompt(int prompt) {
 		break;
 	case REMTILL:
 		printf("How much to remove from the till?\n(use the format 0.00)\n>>$");
+		break;
+	case SHOWTILL:
+		printf("The till has ");
 		break;
 	default:
 		break;

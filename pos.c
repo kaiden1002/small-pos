@@ -4,8 +4,9 @@ int main() {
 	
 	//variables
 	char input[50];
-	char cost[15];
-	char change[15];
+	char cost[50];
+	char change[50];
+	char display[50];
 	int centsInTill = 0;
 	int centsOwed;
 	int centsPaid;
@@ -36,6 +37,9 @@ int main() {
 						break;
 					case '3':
 						action = REMTILL;
+						break;
+					case '4':
+						action = SHOWTILL;
 						break;
 					default:
 						//any other option at this point will just rerun the loop
@@ -191,6 +195,12 @@ int main() {
 					printf("unknown error\n");
 				}
 			}
+			break;
+		case SHOWTILL:
+			dollarFormat(centsInTill, display);
+			printPrompt(SHOWTILL);
+			printf("%s in it\n", display);
+			action = MAIN;
 			break;
 		}
 	}
