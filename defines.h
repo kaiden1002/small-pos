@@ -8,5 +8,7 @@
 #define START 56
 #define AMOUNT 43
 #define CHANGE 31
+#define ADDTILL 21
+#define REMTILL 22
 
 #endif

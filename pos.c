@@ -6,6 +6,7 @@ int main() {
 	char input[50];
 	char cost[15];
 	char change[15];
+	int centsInTill = 0;
 	int centsOwed;
 	int centsPaid;
 	int running = RUN;
@@ -29,6 +30,12 @@ int main() {
 					case '1':
 						//set action to sell moving program flow to that part of the switch statement
 						action = SELL;
+						break;
+					case '2':
+						action = ADDTILL;
+						break;
+					case '3':
+						action = REMTILL;
 						break;
 					default:
 						//any other option at this point will just rerun the loop
@@ -115,6 +122,75 @@ int main() {
 				sellAction = START;
 			}
 			
+			break;
+		case ADDTILL:
+			printPrompt(ADDTILL);
+			scanf("%s", input);
+			if(isDollarFormat(input)){
+				if(input[strlen(input)-1] == '.'){
+					input[strlen(input)-1] = 0;
+					centsInTill += toString(input)*100;
+					action = MAIN;
+				}
+				else if(input[strlen(input)-2] == '.'){
+					input[strlen(input)-2] = input[strlen(input)-1];
+					input[strlen(input)-1] = 0;
+					centsInTill += toString(input)*10;
+					action = MAIN;
+				}
+				else if(input[strlen(input)-3] == '.'){
+					input[strlen(input)-3] =input[strlen(input)-2];
+					input[strlen(input)-2] = input[strlen(input)-1];
+					input[strlen(input)-1] = 0;
+					centsInTill += toString(input);
+					action = MAIN;
+				}
+				else{
+					printf("unknown error\n");
+				}
+			}
+			break;
+		case REMTILL:
+			printPrompt(REMTILL);
+			scanf("%s", input);
+			if(isDollarFormat(input)){
+				if(input[strlen(input)-1] == '.'){
+					input[strlen(input)-1] = 0;
+					if(centsInTill < toString(input)*100){
+						printf("Not enough money\n");
+					}
+					else{
+						centsInTill -= toString(input)*100;
+						action = MAIN;
+					}
+				}
+				else if(input[strlen(input)-2] == '.'){
+					input[strlen(input)-2] = input[strlen(input)-1];
+					input[strlen(input)-1] = 0;
+					if(centsInTill < toString(input)*10){
+						printf("Not enough money\n");
+					}
+					else{
+						centsInTill -= toString(input)*10;
+						action = MAIN;
+					}
+				}
+				else if(input[strlen(input)-3] == '.'){
+					input[strlen(input)-3] =input[strlen(input)-2];
+					input[strlen(input)-2] = input[strlen(input)-1];
+					input[strlen(input)-1] = 0;
+					if(centsInTill < toString(input)){
+						printf("Not enough money\n");
+					}
+					else{
+						centsInTill -= toString(input);
+						action = MAIN;
+					}
+				}
+				else{
+					printf("unknown error\n");
+				}
+			}
 			break;
 		}
 	}

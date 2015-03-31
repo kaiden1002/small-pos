@@ -41,8 +41,8 @@ void printPrompt(int prompt) {
 		printf("What Would You Like To Do?\n");
 		printf("Options:\n0. Quit Small POS\n");
 		printf("1. Sell an item\n");
-		printf("2. \n");
-		printf("3. \n");
+		printf("2. Add to the till\n");
+		printf("3. Remove from the till\n");
 		printf("4. \n");
 		printf("5. \n");
 		printf("6. \n");
@@ -53,6 +53,12 @@ void printPrompt(int prompt) {
 	case SELL:
 		printf("Please enter the item you wish to sell's price\n");
 		printf("(use the format 0.00)\n>>$");
+		break;
+	case ADDTILL:
+		printf("How much to add to the till?\n(use the format 0.00)\n>>$");
+		break;
+	case REMTILL:
+		printf("How much to remove from the till?\n(use the format 0.00)\n>>$");
 		break;
 	default:
 		break;
