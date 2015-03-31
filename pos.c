@@ -4,6 +4,8 @@ int main() {
 	
 	//variables
 	char input[50];
+	char cost[15];
+	char change[15];
 	int centsOwed;
 	int centsPaid;
 	int running = RUN;
@@ -65,8 +67,9 @@ int main() {
 				}
 			}
 			while(sellAction == AMOUNT){
-
-				printf("You are selling an item costing %d pennies\n", centsOwed);
+				dollarFormat(centsOwed, cost);
+				printf("You are selling an item costing %s", cost);
+				printf("\n");
 				printf("How much are you being paid\n>>$");
 				scanf("%s", input);
 				if(isDollarFormat(input)){ //check format of input and make sure it is more than what is owed then move on to CHANGE
@@ -106,8 +109,8 @@ int main() {
 				}
 			}
 			while(sellAction == CHANGE){ //print out change owed and move program flow back to the main menu
-
-				printf("your change is %d pennies\n", centsPaid - centsOwed);
+				dollarFormat(centsPaid - centsOwed, change);
+				printf("your change is %s\n", change);
 				action = MAIN;
 				sellAction = START;
 			}

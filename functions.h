@@ -9,5 +9,8 @@ void printPrompt(int prompt);
 int toString(char a[]);
 int isDollarFormat(char input[]);
 int isSingleDigit(char input[]);
+void dollarFormat(int cents, char* output);
+int centsFromCents(int cents);
+int dollarsFromCents(int cents);
 
 #endif

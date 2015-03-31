@@ -1,5 +1,22 @@
 #include "functions.h"
 
+int dollarsFromCents(int cents){
+	return cents / 100;
+}
+
+int centsFromCents(int cents){
+	return cents % 100;
+}
+
+void dollarFormat(int cents, char* output){
+	if(centsFromCents(cents) < 10){
+		sprintf(output, "$%d.0%d", dollarsFromCents(cents), centsFromCents(cents));
+	}
+	else{
+		sprintf(output, "$%d.%d", dollarsFromCents(cents), centsFromCents(cents));
+	}
+}
+
 int isSingleDigit(char input[]){
 	if(input[0] > 47 && input[0] < 58){
 		if(input[1] == 0){
