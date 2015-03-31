@@ -75,7 +75,7 @@ int isDollarFormat(char input[]) {
 	int k = 0;
 	int j = 0;
 	int i;
-	if(input[0] > 48 && input[0] < 58){
+	if(input[0] > 47 && input[0] < 58){
 		for(i = 1; input[i] != 0;i++){
 
 			if(!(input[i] > 47 && input[i] < 58))
