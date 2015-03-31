@@ -45,12 +45,12 @@ int main() {
 					sellAction = AMOUNT;
 					if(input[strlen(input)-1] == '.'){
 						input[strlen(input)-1] = 0;
-						centsOwed = toString(input);
+						centsOwed = toString(input)*100;
 					}
 					else if(input[strlen(input)-2] == '.'){
 						input[strlen(input)-2] = input[strlen(input)-1];
 						input[strlen(input)-1] = 0;
-						centsOwed = toString(input);
+						centsOwed = toString(input)*10;
 					}
 					else if(input[strlen(input)-3] == '.'){
 						input[strlen(input)-3] =input[strlen(input)-2];
@@ -72,7 +72,7 @@ int main() {
 				if(isDollarFormat(input)){ //check format of input and make sure it is more than what is owed then move on to CHANGE
 					if(input[strlen(input)-1] == '.'){
 						input[strlen(input)-1] = 0;
-						centsPaid = toString(input);
+						centsPaid = toString(input)*100;
 						if(centsPaid >= centsOwed){
 							sellAction = CHANGE;
 						}
@@ -82,7 +82,7 @@ int main() {
 					else if(input[strlen(input)-2] == '.'){
 						input[strlen(input)-2] = input[strlen(input)-1];
 						input[strlen(input)-1] = 0;
-						centsPaid = toString(input);
+						centsPaid = toString(input)*10;
 						if(centsPaid >= centsOwed){
 							sellAction = CHANGE;
 						}

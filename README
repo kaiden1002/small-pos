@@ -1,6 +1,6 @@
 Small POS
 
-Author: Michael N Bilgore
+Author: Michael N. Bilgore
 
 Description:
 	Small POS is a small open source project to keep track of sales
@@ -12,7 +12,12 @@ can run on cheap portable hardware such as a raspberry pi.
 Work so far:
 As of now all the program does is allow you to quit or sell an item
 and it provides you with change owed.
+
+
+Contributors:
+Author (Michael N. Bilgore (Kaiden1002))
+
 mingw compile:
-	gcc pos.c -o pos.exe
+	gcc pos.c functions.c -o pos.exe
 gcc compile:
-	gcc pos.c -o pos
+	gcc pos.c functions.c -o pos
