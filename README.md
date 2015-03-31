@@ -27,13 +27,13 @@ included is a script to test out the program on windows.  to use
 open up git bash in the repo directory (gcc.exe must be in the
 windows path) run: 
 
-"chmod +x wintest.sh" (no quotes) 
+	chmod +x wintest.sh
 
 this only
 must be done one time you can then run the script with the following
 command:
 
-./wintest.sh
+	./wintest.sh
 
 This will compile the program into a file pos.exe run the file then
 remove the file.
