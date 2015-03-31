@@ -121,6 +121,7 @@ int main() {
 			}
 			while(sellAction == CHANGE){ //print out change owed and move program flow back to the main menu
 				dollarFormat(centsPaid - centsOwed, change);
+				centsInTill += centsOwed;
 				printf("your change is %s\n", change);
 				action = MAIN;
 				sellAction = START;
