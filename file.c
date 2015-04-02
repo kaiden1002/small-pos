@@ -2,9 +2,57 @@
 
 int main(){
 	
-	addSKU(123,465, "sku.bin", "price.bin");
-	//printf("%d\n", getTill("price.bin"));
+	addSKU(124,465, "sku.bin", "price.bin");
+	printf("\n\nsku: 123 costs %d\n\n\n", getPrice(125, "sku.bin", "price.bin"));
 	return 0;
+}
+
+int getPrice(int sku, const char *skufile, const char *pricefile){
+	int price = 0;
+	FILE *sFile;
+	FILE *pFile;
+	int *buffer;
+	int arrayLen = 0;
+	int i;
+	int location = -1;
+	
+	sFile = fopen(skufile, "rb");
+	pFile = fopen(pricefile, "rb");
+	if(sFile == NULL || pFile == NULL){
+		perror("Error Occurred");
+		printf("Error Code: %d\n", errno);
+		exit(1);
+	}
+	
+	for(;;){
+		fread(&i, sizeof(int), 1, pFile);
+		
+		arrayLen++;
+		
+		if(i == -1) break;
+	}
+	rewind(pFile);
+	
+	buffer = (int*)malloc(sizeof(int)*arrayLen);
+	
+	for(i = 0; i < arrayLen - 1; i++){
+		fread(buffer+i, sizeof(int), 1, sFile);
+		if(*(buffer+i) == sku) location = i;
+	}
+	if(location == -1){
+		printf("error sku not found\n");
+	}
+	
+	for(i = 0; i < arrayLen - 1; i++){
+		fread(buffer+i, sizeof(int), 1, pFile);
+		if(i == location) price = *(buffer+i);
+	}
+	
+	free(buffer);
+	fclose(pFile);
+	fclose(sFile);
+	
+	return price;
 }
 
 void addSKU(int sku, int price, const char *skufile, const char *pricefile){
@@ -14,6 +62,7 @@ void addSKU(int sku, int price, const char *skufile, const char *pricefile){
 	int *buffer;
 	int arrayLen = 0;
 	int i;
+	int duplicate = 0;
 	
 	sFile = fopen(skufile, "rb+");
 	pFile = fopen(pricefile, "rb+");
@@ -49,30 +98,30 @@ void addSKU(int sku, int price, const char *skufile, const char *pricefile){
 	arrayLen++;
 	rewind(pFile);
 	
-	buffer = (int*)malloc(sizeof(int)*arrayLen);
-	
-	for(i = 0; i < arrayLen - 2;i++){
-		fread(buffer+i, sizeof(int), 1, pFile);
-		printf("price element %d: %d\n", i+1, *(buffer+i));
-	}
-	rewind(pFile);	
-	*(buffer+i) = price;
-	*(buffer+i+1) = -1;
-		
-	fwrite(buffer, sizeof(int), arrayLen, pFile);
-		
-	
+	buffer = (int*)malloc(sizeof(int)*arrayLen);	
 		
 	for(i = 0; i < arrayLen - 2;i++){
 		fread(buffer+i, sizeof(int), 1, sFile);
-		printf("sku element %d: %d\n", i+1, *(buffer+i));
+		if(*(buffer+i) == sku){
+			printf("duplicate sku error\nsku not added\n");
+			duplicate = 1;
+		}
 	}
 	rewind(sFile);
 	*(buffer+i) = sku;
 	*(buffer+i+1) = -1;
 		
-	fwrite(buffer, sizeof(int), arrayLen, sFile);
+	if(!duplicate) fwrite(buffer, sizeof(int), arrayLen, sFile);
 		
+	for(i = 0; i < arrayLen - 2;i++){
+		fread(buffer+i, sizeof(int), 1, pFile);
+	}
+	rewind(pFile);	
+	*(buffer+i) = price;
+	*(buffer+i+1) = -1;
+		
+	if(!duplicate) fwrite(buffer, sizeof(int), arrayLen, pFile);
+	
 	fclose(sFile);
 	fclose(pFile);
 	free(buffer);
