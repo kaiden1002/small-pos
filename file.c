@@ -1,12 +1,4 @@
 #include "file.h"
-int main(void){
-	
-    int till = getTill("till.bin");
-	printf("till is: %d\nchange to what\n>>", till);
-	scanf("%d", &till);
-	saveTill("till.bin", till);
-	return 0;
-}
 
 void saveTill(const char *file, int till){
 	FILE *pFile;
@@ -35,7 +27,11 @@ int getTill(const char *file){
         perror("Error Occurred");
 		printf("Error Code: %d\n", errno);
 	         
-        exit(1);
+        printf("Till file does not exist creating...\n");
+		
+		saveTill(file, 0);
+		
+		return 0;
     }
 	
 	fseek (pFile , 0 , SEEK_END);

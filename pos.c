@@ -7,12 +7,14 @@ int main() {
 	char cost[50];
 	char change[50];
 	char display[50];
-	int centsInTill = 0;
+	int centsInTill = getTill("till.bin");
 	int centsOwed;
 	int centsPaid;
 	int running = RUN;
 	int action = MAIN;
 	int sellAction = START;
+	
+	
 	
 	//main program loop
 	while(running) {
@@ -121,7 +123,7 @@ int main() {
 			}
 			while(sellAction == CHANGE){ //print out change owed and move program flow back to the main menu
 				dollarFormat(centsPaid - centsOwed, change);
-				centsInTill += centsOwed;
+				addToTill(centsOwed, &centsInTill, "till.bin");
 				printf("your change is %s\n", change);
 				action = MAIN;
 				sellAction = START;
@@ -134,20 +136,20 @@ int main() {
 			if(isDollarFormat(input)){
 				if(input[strlen(input)-1] == '.'){
 					input[strlen(input)-1] = 0;
-					centsInTill += toString(input)*100;
+					addToTill(toString(input)*100, &centsInTill, "till.bin");
 					action = MAIN;
 				}
 				else if(input[strlen(input)-2] == '.'){
 					input[strlen(input)-2] = input[strlen(input)-1];
 					input[strlen(input)-1] = 0;
-					centsInTill += toString(input)*10;
+					addToTill(toString(input)*10, &centsInTill, "till.bin");
 					action = MAIN;
 				}
 				else if(input[strlen(input)-3] == '.'){
 					input[strlen(input)-3] =input[strlen(input)-2];
 					input[strlen(input)-2] = input[strlen(input)-1];
 					input[strlen(input)-1] = 0;
-					centsInTill += toString(input);
+					addToTill(toString(input), &centsInTill, "till.bin");
 					action = MAIN;
 				}
 				else{
@@ -165,7 +167,7 @@ int main() {
 						printf("Not enough money\n");
 					}
 					else{
-						centsInTill -= toString(input)*100;
+						addToTill(-1*toString(input)*100, &centsInTill, "till.bin");
 						action = MAIN;
 					}
 				}
@@ -176,7 +178,7 @@ int main() {
 						printf("Not enough money\n");
 					}
 					else{
-						centsInTill -= toString(input)*10;
+						addToTill(-1*toString(input)*10, &centsInTill, "till.bin");
 						action = MAIN;
 					}
 				}
@@ -188,7 +190,7 @@ int main() {
 						printf("Not enough money\n");
 					}
 					else{
-						centsInTill -= toString(input);
+						addToTill(-1*toString(input), &centsInTill, "till.bin");
 						action = MAIN;
 					}
 				}

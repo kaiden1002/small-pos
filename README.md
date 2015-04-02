@@ -69,9 +69,9 @@ Author (Michael N. Bilgore (Kaiden1002))
 
 mingw compile:
 
-	gcc pos.c functions.c -o pos.exe
+	gcc pos.c functions.c file.c -o pos.exe
 	
 	
 gcc compile:
 
-	gcc pos.c functions.c -o pos
+	gcc pos.c functions.c file.c -o pos
