@@ -1,10 +1,78 @@
 #include "file.h"
 
-int main(){
+void remSKU(int sku, int price, const char *skufile, const char *pricefile){
+	FILE *sFile;
+	FILE *pFile;
+	int *buffer;
+	int *final;
+	int arrayLen = 0;
+	int i;
+	int j = 0;
+	int skip = -2;
 	
-	addSKU(124,465, "sku.bin", "price.bin");
-	printf("\n\nsku: 123 costs %d\n\n\n", getPrice(125, "sku.bin", "price.bin"));
-	return 0;
+	sFile = fopen(skufile, "rb+");
+	pFile = fopen(pricefile, "rb+");
+	if(sFile == NULL || pFile == NULL){
+		perror("Error Occurred");
+		printf("Error Code: %d\n", errno);
+		exit(1);
+		
+	}
+
+	for(;;){
+		fread(&i, sizeof(int), 1, pFile);
+		
+		arrayLen++;
+		
+		if(i == -1) break;
+	}
+	
+	rewind(pFile);
+	
+	buffer = (int*)malloc(sizeof(int)*arrayLen);
+	final = (int*)malloc(sizeof(int)*(arrayLen-1));	
+		
+	for(i = 0; i < arrayLen;i++){
+		fread(buffer+i, sizeof(int), 1, sFile);
+		if(*(buffer+i) == sku){
+			skip = i;
+		}
+	}
+	rewind(sFile);
+	
+	if(skip == -2){
+		printf("sku not found no removal\n");
+	}
+	else{
+		for(i = 0; i < arrayLen; i++){
+			if(skip != i){
+				*(final+j) = *(buffer+i);
+				j++;
+			}
+		}
+		fwrite(final, sizeof(int), arrayLen-1, sFile);
+		j = 0;
+		
+		for(i = 0; i < arrayLen; i++){
+			fread(buffer+i, sizeof(int), 1, pFile);
+		}
+		
+		for(i = 0; i < arrayLen; i++){
+			if(skip != i){
+				*(final+j) = *(buffer+i);
+				j++;
+			}
+		}
+		
+		fwrite(final, sizeof(int), arrayLen-1, pFile);
+	}
+	
+	
+	
+	fclose(sFile);
+	fclose(pFile);
+	free(buffer);
+
 }
 
 int getPrice(int sku, const char *skufile, const char *pricefile){
