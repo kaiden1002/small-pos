@@ -70,6 +70,11 @@ void printPrompt(int prompt) {
 
 }
 
+void addToTill(int amount, int* till, const char *file){
+	*till += amount;
+	saveTill("till.bin",*till);
+}
+
 int isDollarFormat(char input[]) {
 	
 	int k = 0;
