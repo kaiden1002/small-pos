@@ -1,6 +1,7 @@
 #include "file.h"
 
 void printSKUS(const char *skufile, const char *pricefile){
+	
 	FILE *sFile;
 	FILE *pFile;
 	int *bufferOne;
@@ -10,11 +11,11 @@ void printSKUS(const char *skufile, const char *pricefile){
 	
 	sFile = fopen(skufile, "rb+");
 	pFile = fopen(pricefile, "rb+");
+	
 	if(sFile == NULL || pFile == NULL){
 		perror("Error Occurred");
 		printf("Error Code: %d\n", errno);
 		exit(1);
-		
 	}
 
 	for(;;){
@@ -39,7 +40,9 @@ void printSKUS(const char *skufile, const char *pricefile){
 		int buffOne = *(bufferOne+i);
 		int buffTwo = *(bufferTwo+i);
 		char price[50];
+		
 		dollarFormat(buffTwo, price);
+		
 		printf("SKU: %d costs %s\n", buffOne, price);
 	}
 
@@ -50,6 +53,7 @@ void printSKUS(const char *skufile, const char *pricefile){
 }
 
 void remSKU(int sku, int price, const char *skufile, const char *pricefile){
+	
 	FILE *sFile;
 	FILE *pFile;
 	int *buffer;
@@ -61,11 +65,11 @@ void remSKU(int sku, int price, const char *skufile, const char *pricefile){
 	
 	sFile = fopen(skufile, "rb+");
 	pFile = fopen(pricefile, "rb+");
+	
 	if(sFile == NULL || pFile == NULL){
 		perror("Error Occurred");
 		printf("Error Code: %d\n", errno);
 		exit(1);
-		
 	}
 
 	for(;;){
@@ -83,15 +87,18 @@ void remSKU(int sku, int price, const char *skufile, const char *pricefile){
 		
 	for(i = 0; i < arrayLen;i++){
 		fread(buffer+i, sizeof(int), 1, sFile);
+		
 		if(*(buffer+i) == sku){
 			skip = i;
 		}
 	}
+	
 	rewind(sFile);
 	
 	if(skip == -2){
 		printf("sku not found no removal\n");
 	}
+	
 	else{
 		for(i = 0; i < arrayLen; i++){
 			if(skip != i){
@@ -99,7 +106,9 @@ void remSKU(int sku, int price, const char *skufile, const char *pricefile){
 				j++;
 			}
 		}
+		
 		fwrite(final, sizeof(int), arrayLen-1, sFile);
+		
 		j = 0;
 		
 		for(i = 0; i < arrayLen; i++){
@@ -116,15 +125,13 @@ void remSKU(int sku, int price, const char *skufile, const char *pricefile){
 		fwrite(final, sizeof(int), arrayLen-1, pFile);
 	}
 	
-	
-	
 	fclose(sFile);
 	fclose(pFile);
 	free(buffer);
-
 }
 
 int getPrice(int sku, const char *skufile, const char *pricefile){
+	
 	int price = 0;
 	FILE *sFile;
 	FILE *pFile;
@@ -135,6 +142,7 @@ int getPrice(int sku, const char *skufile, const char *pricefile){
 	
 	sFile = fopen(skufile, "rb");
 	pFile = fopen(pricefile, "rb");
+	
 	if(sFile == NULL || pFile == NULL){
 		perror("Error Occurred");
 		printf("Error Code: %d\n", errno);
@@ -148,20 +156,24 @@ int getPrice(int sku, const char *skufile, const char *pricefile){
 		
 		if(i == -1) break;
 	}
+	
 	rewind(pFile);
 	
 	buffer = (int*)malloc(sizeof(int)*arrayLen);
 	
 	for(i = 0; i < arrayLen - 1; i++){
 		fread(buffer+i, sizeof(int), 1, sFile);
+		
 		if(*(buffer+i) == sku) location = i;
 	}
+	
 	if(location == -1){
 		printf("error sku not found\n");
 	}
 	
 	for(i = 0; i < arrayLen - 1; i++){
 		fread(buffer+i, sizeof(int), 1, pFile);
+		
 		if(i == location) price = *(buffer+i);
 	}
 	
@@ -173,6 +185,7 @@ int getPrice(int sku, const char *skufile, const char *pricefile){
 }
 
 void addSKU(int sku, int price, const char *skufile, const char *pricefile){
+	
 	FILE *sFile;
 	FILE *pFile;
 	int placeholder[] = {-1};
@@ -183,6 +196,7 @@ void addSKU(int sku, int price, const char *skufile, const char *pricefile){
 	
 	sFile = fopen(skufile, "rb+");
 	pFile = fopen(pricefile, "rb+");
+	
 	if(sFile == NULL || pFile == NULL){
 		perror("Error Occurred");
 		printf("Error Code: %d\n", errno);
@@ -201,7 +215,6 @@ void addSKU(int sku, int price, const char *skufile, const char *pricefile){
 		fwrite(placeholder, sizeof(int), 1, sFile);
 		rewind(pFile);
 		rewind(sFile);
-		
 	}
 
 	for(;;){
@@ -213,18 +226,23 @@ void addSKU(int sku, int price, const char *skufile, const char *pricefile){
 	}
 	
 	arrayLen++;
+	
 	rewind(pFile);
 	
 	buffer = (int*)malloc(sizeof(int)*arrayLen);	
 		
 	for(i = 0; i < arrayLen - 2;i++){
 		fread(buffer+i, sizeof(int), 1, sFile);
+		
 		if(*(buffer+i) == sku){
 			printf("duplicate sku error\nsku not added\n");
+			
 			duplicate = 1;
 		}
 	}
+	
 	rewind(sFile);
+	
 	*(buffer+i) = sku;
 	*(buffer+i+1) = -1;
 		
@@ -233,7 +251,9 @@ void addSKU(int sku, int price, const char *skufile, const char *pricefile){
 	for(i = 0; i < arrayLen - 2;i++){
 		fread(buffer+i, sizeof(int), 1, pFile);
 	}
+	
 	rewind(pFile);	
+	
 	*(buffer+i) = price;
 	*(buffer+i+1) = -1;
 		
@@ -242,18 +262,16 @@ void addSKU(int sku, int price, const char *skufile, const char *pricefile){
 	fclose(sFile);
 	fclose(pFile);
 	free(buffer);
-
 }
 
 void saveTill(const char *file, int till){
+	
 	FILE *pFile;
 	pFile = fopen(file, "wb+");
 	
     if(pFile == NULL){
-	     
         perror("Error Occurred");
-		printf("Error Code: %d\n", errno);
-	         
+		printf("Error Code: %d\n", errno);  
         exit(1);
     }
 	
@@ -262,13 +280,13 @@ void saveTill(const char *file, int till){
 }
 
 int getTill(const char *file){
+	
 	int rValue;
 	FILE *pFile;
 	pFile = fopen(file, "rb+");
 	long fileSize;
 	
-    if(pFile == NULL){
-	     
+    if(pFile == NULL){ 
         perror("Error Occurred");
 		printf("Error Code: %d\n", errno);
 	         
@@ -280,7 +298,8 @@ int getTill(const char *file){
     }
 	
 	fseek (pFile , 0 , SEEK_END);
-    fileSize = ftell(pFile);
+    
+	fileSize = ftell(pFile);
      
     rewind(pFile);
 	     
