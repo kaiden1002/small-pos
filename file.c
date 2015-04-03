@@ -1,5 +1,61 @@
 #include "file.h"
 
+int main(){
+	
+	printSKUS("sku.bin","price.bin");
+	
+	return 0;
+}
+
+void printSKUS(const char *skufile, const char *pricefile){
+	FILE *sFile;
+	FILE *pFile;
+	int *bufferOne;
+	int *bufferTwo;
+	int arrayLen = 0;
+	int i;
+	
+	sFile = fopen(skufile, "rb+");
+	pFile = fopen(pricefile, "rb+");
+	if(sFile == NULL || pFile == NULL){
+		perror("Error Occurred");
+		printf("Error Code: %d\n", errno);
+		exit(1);
+		
+	}
+
+	for(;;){
+		fread(&i, sizeof(int), 1, pFile);
+		
+		arrayLen++;
+		
+		if(i == -1) break;
+	}
+
+	rewind(pFile);
+	
+	bufferOne = (int*)malloc(sizeof(int)*arrayLen);
+	bufferTwo = (int*)malloc(sizeof(int)*arrayLen);
+	
+	for(i = 0; i < arrayLen; i++){
+		fread(bufferOne+i, sizeof(int), 1, sFile);
+		fread(bufferTwo+i, sizeof(int), 1, pFile);
+	}
+
+	for(i = 0; i < arrayLen-1; i++){
+		int buffOne = *(bufferOne+i);
+		int buffTwo = *(bufferTwo+i);
+		char price[50];
+		dollarFormat(buffTwo, price);
+		printf("SKU: %d costs %s\n", buffOne, price);
+	}
+
+	fclose(pFile);
+	fclose(sFile);
+	free(bufferOne);
+	free(bufferTwo);
+}
+
 void remSKU(int sku, int price, const char *skufile, const char *pricefile){
 	FILE *sFile;
 	FILE *pFile;
