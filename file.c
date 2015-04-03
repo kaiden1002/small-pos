@@ -1,12 +1,5 @@
 #include "file.h"
 
-int main(){
-	
-	printSKUS("sku.bin","price.bin");
-	
-	return 0;
-}
-
 void printSKUS(const char *skufile, const char *pricefile){
 	FILE *sFile;
 	FILE *pFile;

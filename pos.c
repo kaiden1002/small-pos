@@ -43,6 +43,18 @@ int main() {
 					case '4':
 						action = SHOWTILL;
 						break;
+					case '5':
+						action = PRINTSKU;
+						break;
+					case '6':
+						action = ADDSKU;
+						break;
+					case '7':
+						action = REMSKU;
+						break;
+					case '8':
+						action = SEEKPRICE;
+						break;
 					default:
 						//any other option at this point will just rerun the loop
 						action = MAIN;

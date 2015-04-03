@@ -44,11 +44,11 @@ void printPrompt(int prompt) {
 		printf("2. Add to the till\n");
 		printf("3. Remove from the till\n");
 		printf("4. Show till balance\n");
-		printf("5. \n");
-		printf("6. \n");
-		printf("7. \n");
-		printf("8. \n");
-		printf("9. \n>>");
+		printf("5. Print List of SKUs\n");
+		printf("6. Add to list of SKUs\n");
+		printf("7. Remove from list of SKUs\n");
+		printf("8. Find price of SKU\n");
+		printf("9. soon to come...\n>>");
 		break;
 	case SELL:
 		printf("Please enter the item you wish to sell's price\n");
