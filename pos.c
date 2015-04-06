@@ -16,6 +16,9 @@ int main() {
 	int action = MAIN;
 	int sellAction = START;
 	
+	printf("\nWelcome to Small POS\n");
+	printf("What Would You Like To Do?\n");
+	
 	//main program loop
 	while(running) {
 		
@@ -130,9 +133,9 @@ int main() {
 				
 				dollarFormat(centsOwed, cost);
 				
-				printf("You are selling an item costing %s", cost);
+				printf("\nYou are selling an item costing %s", cost);
 				printf("\n");
-				printf("How much are you being paid\n>>$");
+				printf("How much are you being paid?\n\n>>$");
 				scanf("%s", input);
 				
 				if(isDollarFormat(input)){ //check format of input and make sure it is more than what is owed then move on to CHANGE
@@ -188,7 +191,7 @@ int main() {
 				dollarFormat(centsPaid - centsOwed, change);
 				addToTill(centsOwed, &centsInTill, "till.bin");
 				
-				printf("your change is %s\n", change);
+				printf("\nyour change is %s\n", change);
 				
 				action = MAIN;
 				sellAction = START;
@@ -300,7 +303,7 @@ int main() {
 		case SHOWTILL:
 			dollarFormat(centsInTill, display);
 			printPrompt(SHOWTILL);
-			printf("%s in it\n\n", display);
+			printf("%s in it\n", display);
 			
 			action = MAIN;
 			break;
@@ -308,7 +311,6 @@ int main() {
 		case PRINTSKU:
 			printf("\n");
 			printSKUS("sku.bin", "price.bin");
-			printf("\n");
 			
 			action = MAIN;
 			break;
@@ -324,7 +326,7 @@ int main() {
 				action = MAIN;
 			}
 			
-			printf("What does SKU: %s cost?\n>>");
+			printf("\nWhat does SKU: %s cost?\n\n>>");
 			scanf("%s", input);
 			if(isDollarFormat(input)){
 				if(input[strlen(input)-1] == '.'){
@@ -386,7 +388,7 @@ int main() {
 				intInput = getPrice(toString(input), "sku.bin", "price.bin");
 				if(intInput != 0){
 					dollarFormat(intInput, display);
-					printf("\nthe SKU %s costs %s\n\n", input, display);
+					printf("\nthe SKU %s costs %s\n", input, display);
 					
 				}
 				action = MAIN;

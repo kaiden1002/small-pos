@@ -107,7 +107,6 @@ void remSKU(int sku, const char *skufile, const char *pricefile){
 		for(i = 0; i < arrayLen; i++){
 			if(skip != i){
 				*(final+j) = *(buffer+i);
-				printf("\n%d\n", *(final+j));
 				j++;
 			}
 			
@@ -125,7 +124,6 @@ void remSKU(int sku, const char *skufile, const char *pricefile){
 		for(i = 0; i < arrayLen; i++){
 			if(skip != i){
 				*(final+j) = *(buffer+i);
-				printf("\n%d\n", *(final+j));
 				j++;
 			}
 		}
