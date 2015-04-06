@@ -14,5 +14,6 @@ void dollarFormat(int cents, char* output);
 int centsFromCents(int cents);
 int dollarsFromCents(int cents);
 void addToTill(int amount, int* till, const char *file);
+int isPlainInt(char *input);
 
 #endif

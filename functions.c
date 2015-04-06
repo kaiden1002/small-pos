@@ -77,6 +77,10 @@ void printPrompt(int prompt) {
 		printf("The till has ");
 		break;
 		
+	case ADDSKU:
+		printf("What number SKU would you like to add?\n>>");
+		break;
+		
 	default:
 		break;
 	}
@@ -125,6 +129,20 @@ int isDollarFormat(char input[]) {
 		
 		return 0;
 	}
+}
+
+int isPlainInt(char *input){
+	
+	int r = 1;
+	int i;
+	
+	for(i = 0; *(input+i) != 0; i++){
+		if(!(*(input+i) > 47 && *(input+i) < 58)){
+			r = 0;
+		}
+	}
+	
+	return r;
 }
 
 int toString(char a[]){

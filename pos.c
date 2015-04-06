@@ -7,9 +7,11 @@ int main() {
 	char cost[50];
 	char change[50];
 	char display[50];
+	int intInput;
 	int centsInTill = getTill("till.bin");
 	int centsOwed;
 	int centsPaid;
+	int priceInput;
 	int running = RUN;
 	int action = MAIN;
 	int sellAction = START;
@@ -114,6 +116,11 @@ int main() {
 						printf("unknown error\n");
 					}
 				}
+				else {
+					printf("input error\n");
+					action = MAIN;
+					break;
+				}
 			}
 			
 			while(sellAction == AMOUNT){
@@ -166,6 +173,11 @@ int main() {
 						printf("unknown error\n");
 					}
 				}
+				else{
+					printf("input error\n");
+					action = MAIN;
+					break;
+				}
 			}
 			
 			while(sellAction == CHANGE){ //print out change owed and move program flow back to the main menu
@@ -215,6 +227,10 @@ int main() {
 				else{
 					printf("unknown error\n");
 				}
+			}
+			else{
+				printf("input error\n");
+				action = MAIN;
 			}
 			break;
 			
@@ -272,6 +288,10 @@ int main() {
 					printf("unknown error\n");
 				}
 			}
+			else {
+				printf("input error\n");
+				action = MAIN;
+			}
 			break;
 			
 		case SHOWTILL:
@@ -287,6 +307,58 @@ int main() {
 			printSKUS("sku.bin", "price.bin");
 			printf("\n");
 			
+			action = MAIN;
+			break;
+			
+		case ADDSKU:
+			printPrompt(ADDSKU);
+			scanf("%s", input);
+			if(isPlainInt(input)){
+				intInput = toString(input);
+			}
+			else{
+				printf("input error\n");
+				action = MAIN;
+			}
+			
+			printf("What does SKU: %s cost?\n>>");
+			scanf("%s", input);
+			if(isDollarFormat(input)){
+				if(input[strlen(input)-1] == '.'){
+					input[strlen(input)-1] = 0;
+					
+					priceInput = toString(input)*100;
+				}
+				
+				else if(input[strlen(input)-2] == '.'){
+					input[strlen(input)-2] = input[strlen(input)-1];
+					input[strlen(input)-1] = 0;
+					
+					priceInput = toString(input)*10;
+					
+				}
+				
+				else if(input[strlen(input)-3] == '.'){
+					input[strlen(input)-3] =input[strlen(input)-2];
+					input[strlen(input)-2] = input[strlen(input)-1];
+					input[strlen(input)-1] = 0;
+					
+					priceInput = toString(input);
+					
+				}
+				
+				else{
+					printf("unknown error\n");
+					action = MAIN;
+				}
+			}
+			else{
+				printf("input error\n");
+				action = MAIN;
+				break;
+			}
+			
+			addSKU(intInput, priceInput, "sku.bin", "price.bin");
 			action = MAIN;
 			break;
 		}
