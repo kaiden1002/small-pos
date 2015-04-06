@@ -281,6 +281,14 @@ int main() {
 			
 			action = MAIN;
 			break;
+			
+		case PRINTSKU:
+			printf("\n");
+			printSKUS("sku.bin", "price.bin");
+			printf("\n");
+			
+			action = MAIN;
+			break;
 		}
 	}
 	
