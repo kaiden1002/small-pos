@@ -74,7 +74,10 @@ int main() {
 						//set action to find the price of a sku and print it
 						action = SEEKPRICE;
 						break;
-						
+					
+					case '9':
+						action = SKUSELL;
+						break;
 					default:
 						//any other option at this point will just rerun the loop
 						action = MAIN;
@@ -297,7 +300,7 @@ int main() {
 		case SHOWTILL:
 			dollarFormat(centsInTill, display);
 			printPrompt(SHOWTILL);
-			printf("%s in it\n", display);
+			printf("%s in it\n\n", display);
 			
 			action = MAIN;
 			break;
@@ -395,6 +398,27 @@ int main() {
 				break;
 				
 			}
+			
+		case SKUSELL:
+			sellAction = AMOUNT;
+			action = SELL;
+			printPrompt(SKUSELL);
+			scanf("%s", input);
+			
+			if(isPlainInt(input)){
+				if(getPrice(toString(input), "sku.bin", "price.bin") == 0){
+					action = MAIN;
+				}
+				else {
+					centsOwed = getPrice(toString(input), "sku.bin", "price.bin");
+				}
+			}
+			
+			else{
+				printf("input error\n");
+				action = MAIN;
+			}
+			break;
 			
 		}
 	}

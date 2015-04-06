@@ -49,7 +49,7 @@ void printPrompt(int prompt) {
 		printf("Welcome to Small POS\n");
 		printf("What Would You Like To Do?\n");
 		printf("Options:\n0. Quit Small POS\n");
-		printf("1. Sell an item\n");
+		printf("1. Sell an item not in your SKU library\n");
 		printf("2. Add to the till\n");
 		printf("3. Remove from the till\n");
 		printf("4. Show till balance\n");
@@ -57,7 +57,7 @@ void printPrompt(int prompt) {
 		printf("6. Add to list of SKUs\n");
 		printf("7. Remove from list of SKUs\n");
 		printf("8. Find price of SKU\n");
-		printf("9. soon to come...\n>>");
+		printf("9. Sell an item in your SKU library\n>>");
 		break;
 		
 	case SELL:
@@ -74,7 +74,7 @@ void printPrompt(int prompt) {
 		break;
 		
 	case SHOWTILL:
-		printf("The till has ");
+		printf("\nThe till has ");
 		break;
 		
 	case ADDSKU:
@@ -87,6 +87,9 @@ void printPrompt(int prompt) {
 	
 	case SEEKPRICE:
 		printf("What SKU would you like to look up?\n>>");
+		break;
+	case SKUSELL:
+		printf("What SKU would you like to sell?\n>>");
 		break;
 		
 	default:
