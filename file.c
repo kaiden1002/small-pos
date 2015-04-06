@@ -21,9 +21,11 @@ void printSKUS(const char *skufile, const char *pricefile){
 	for(;;){
 		fread(&i, sizeof(int), 1, pFile);
 		
-		arrayLen++;
+		
 		
 		if(i == -1) break;
+		
+		arrayLen++;
 	}
 
 	rewind(pFile);
@@ -75,9 +77,11 @@ void remSKU(int sku, const char *skufile, const char *pricefile){
 	for(;;){
 		fread(&i, sizeof(int), 1, pFile);
 		
-		arrayLen++;
+		
 		
 		if(i == -1) break;
+		
+		arrayLen++;
 	}
 	
 	rewind(pFile);
@@ -108,7 +112,7 @@ void remSKU(int sku, const char *skufile, const char *pricefile){
 			}
 			
 		}
-		*(final+i) = -1;
+		*(final+j) = -1;
 		fwrite(final, sizeof(int), arrayLen-1, sFile);
 		
 		j = 0;
@@ -125,7 +129,7 @@ void remSKU(int sku, const char *skufile, const char *pricefile){
 				j++;
 			}
 		}
-		*(final+i) = -1;
+		*(final+j) = -1;
 		fwrite(final, sizeof(int), arrayLen-1, pFile);
 	}
 	
