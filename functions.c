@@ -81,6 +81,10 @@ void printPrompt(int prompt) {
 		printf("What number SKU would you like to add?\n>>");
 		break;
 		
+	case REMSKU:
+		printf("Which SKU to remove?\n>>");
+		break;
+		
 	default:
 		break;
 	}

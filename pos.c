@@ -361,6 +361,21 @@ int main() {
 			addSKU(intInput, priceInput, "sku.bin", "price.bin");
 			action = MAIN;
 			break;
+			
+		case REMSKU:
+			printPrompt(REMSKU);
+			scanf("%s", input);
+			if(isPlainInt(input)){
+				remSKU(toString(input), "sku.bin", "price.bin");
+			}
+			else{
+				printf("input error\n");
+				action = MAIN;
+				break;
+			}
+			action = MAIN;
+			break;
+			
 		}
 	}
 	

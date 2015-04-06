@@ -52,7 +52,7 @@ void printSKUS(const char *skufile, const char *pricefile){
 	free(bufferTwo);
 }
 
-void remSKU(int sku, int price, const char *skufile, const char *pricefile){
+void remSKU(int sku, const char *skufile, const char *pricefile){
 	
 	FILE *sFile;
 	FILE *pFile;
@@ -83,7 +83,7 @@ void remSKU(int sku, int price, const char *skufile, const char *pricefile){
 	rewind(pFile);
 	
 	buffer = (int*)malloc(sizeof(int)*arrayLen);
-	final = (int*)malloc(sizeof(int)*(arrayLen-1));	
+	final = (int*)malloc(sizeof(int)*(arrayLen));	
 		
 	for(i = 0; i < arrayLen;i++){
 		fread(buffer+i, sizeof(int), 1, sFile);
@@ -95,7 +95,7 @@ void remSKU(int sku, int price, const char *skufile, const char *pricefile){
 	
 	rewind(sFile);
 	
-	if(skip == -2){
+	if(skip == -2 || skip == -1){
 		printf("sku not found no removal\n");
 	}
 	
@@ -103,10 +103,12 @@ void remSKU(int sku, int price, const char *skufile, const char *pricefile){
 		for(i = 0; i < arrayLen; i++){
 			if(skip != i){
 				*(final+j) = *(buffer+i);
+				printf("\n%d\n", *(final+j));
 				j++;
 			}
+			
 		}
-		
+		*(final+i) = -1;
 		fwrite(final, sizeof(int), arrayLen-1, sFile);
 		
 		j = 0;
@@ -114,14 +116,16 @@ void remSKU(int sku, int price, const char *skufile, const char *pricefile){
 		for(i = 0; i < arrayLen; i++){
 			fread(buffer+i, sizeof(int), 1, pFile);
 		}
+		rewind(pFile);
 		
 		for(i = 0; i < arrayLen; i++){
 			if(skip != i){
 				*(final+j) = *(buffer+i);
+				printf("\n%d\n", *(final+j));
 				j++;
 			}
 		}
-		
+		*(final+i) = -1;
 		fwrite(final, sizeof(int), arrayLen-1, pFile);
 	}
 	
