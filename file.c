@@ -38,7 +38,7 @@ void printSKUS(const char *skufile, const char *pricefile){
 		fread(bufferTwo+i, sizeof(int), 1, pFile);
 	}
 
-	for(i = 0; i < arrayLen-1; i++){
+	for(i = 0; i < arrayLen; i++){
 		int buffOne = *(bufferOne+i);
 		int buffTwo = *(bufferTwo+i);
 		char price[50];
@@ -113,7 +113,7 @@ void remSKU(int sku, const char *skufile, const char *pricefile){
 			
 		}
 		*(final+j) = -1;
-		fwrite(final, sizeof(int), arrayLen-1, sFile);
+		fwrite(final, sizeof(int), arrayLen, sFile);
 		
 		j = 0;
 		
@@ -130,7 +130,7 @@ void remSKU(int sku, const char *skufile, const char *pricefile){
 			}
 		}
 		*(final+j) = -1;
-		fwrite(final, sizeof(int), arrayLen-1, pFile);
+		fwrite(final, sizeof(int), arrayLen, pFile);
 	}
 	
 	fclose(sFile);

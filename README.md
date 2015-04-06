@@ -20,6 +20,10 @@ till, remove from the till, and display the till balance.  You can also
 sell an item of a price you then specify.  Selling an item adds the
 item's price to the till balance.
 
+General testing note:
+
+There are 2 .bkup files included these can be renamed to .bin files
+they contain a small set of testing binary data to revert to.
 
 Windows testing instructions:
 
