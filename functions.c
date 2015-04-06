@@ -84,6 +84,10 @@ void printPrompt(int prompt) {
 	case REMSKU:
 		printf("Which SKU to remove?\n>>");
 		break;
+	
+	case SEEKPRICE:
+		printf("What SKU would you like to look up?\n>>");
+		break;
 		
 	default:
 		break;

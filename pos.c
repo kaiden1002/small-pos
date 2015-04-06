@@ -375,6 +375,26 @@ int main() {
 			}
 			action = MAIN;
 			break;
+		
+		case SEEKPRICE:
+			printPrompt(SEEKPRICE);
+			scanf("%s", input);
+			if(isPlainInt(input)){
+				intInput = getPrice(toString(input), "sku.bin", "price.bin");
+				if(intInput != 0){
+					dollarFormat(intInput, display);
+					printf("\nthe SKU %s costs %s\n\n", input, display);
+					
+				}
+				action = MAIN;
+				break;
+			}
+			else {
+				printf("input error\n");
+				action = MAIN;
+				break;
+				
+			}
 			
 		}
 	}
